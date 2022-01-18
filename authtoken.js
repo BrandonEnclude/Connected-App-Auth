@@ -24,6 +24,14 @@ const claim = {
 // Sign and encode JWT using the key to the certificate uploaded to the connected app
 const CERT = fs.readFileSync('./certificate/key.pem', 'utf8');
 const token = jwt.encode(claim, CERT, 'RS256'); //Encryption method must be "RS256"
+console.log(
+    `
+Encoded JWT:
+=========================================================
+        ${token}
+=========================================================
+    `
+)
 
 // Salesforce's oauth2 endpoint and POST request body
 const authURL = `${AUD}/services/oauth2/token`;
@@ -40,9 +48,12 @@ const authResponse = async () => {
         const instanceUrl = response.data.instance_url;
         console.log(
             `
-            Access Token: ${accessToken}
-            Scope: ${scope}
-            Instance URL: ${instanceUrl}
+OAuth Response:
+=========================================================
+    Access Token: ${accessToken}
+    Scope: ${scope}
+    Instance URL: ${instanceUrl}
+=========================================================
             `
         );
         return response;
